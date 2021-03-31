@@ -10,7 +10,7 @@ import (
 
 // /www/AvProxy-x64 -HttpPort 8088 -Log ./log -ConfigUrl http://127.0.0.1/test/AvProxy.xml http://127.0.0.1/static/AvProxy.xml
 func main() {
-	cmdName := "./AvProxy-x64"
+	cmdName := "/www/AvProxy-x64"
 	args := []string{"-HttpPort", "8088", "-Log", "./log", "-ConfigUrl", "http://127.0.0.1/test/AvProxy.xml"}
 	// cmdName := "ping"
 	// args := []string{"-t", "www.baidu.com"}
@@ -22,18 +22,14 @@ func main() {
 		fmt.Printf("1- %+v\n", args)
 	}()
 
-	time.Sleep(2 * time.Second)
+	time.Sleep(5 * time.Second)
 
-	go func() {
-		for sys.IsRunning(cmdName) {
-			if sys.IsRunning(cmdName) {
-				sys.Stop(cmdName)
-				os.Remove("./AvProxy.xml.tmp")
-				os.Remove("./AvProxy.xml")
-			}
+	for sys.IsRunning(cmdName) {
+		if sys.IsRunning(cmdName) {
+			sys.Stop(cmdName)
 		}
-	}()
-
+	}
+	time.Sleep(5 * time.Second)
 	for {
 		if !sys.IsRunning(cmdName) {
 			args = []string{"-HttpPort", "8088", "-Log", "./log", "-ConfigUrl", "http://127.0.0.1/static/AvProxy.xml"}
@@ -46,4 +42,11 @@ func main() {
 		}
 	}
 
+}
+
+// IsExist checks whether a file or directory exists.
+// It returns false when the file or directory does not exist.
+func IsExist(fp string) bool {
+	_, err := os.Stat(fp)
+	return err == nil || os.IsExist(err)
 }
