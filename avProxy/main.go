@@ -5,7 +5,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/snowlyg/go-iptv/sys"
+	"github.com/snowlyg/go-iptv/avProxy/sys"
 )
 
 // /www/AvProxy-x64 -HttpPort 8088 -Log ./log -ConfigUrl http://127.0.0.1/test/AvProxy.xml http://127.0.0.1/static/AvProxy.xml
